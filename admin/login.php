@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -42,12 +41,12 @@
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">Selamat datang</h1>
                                     </div>
-                                    <form class="user" action="login/index.php" method="POST" >
+                                    <form class="user">
                                         <div class="form-group">
-                                            <input type="text" name="username" class="form-control form-control-user" id="exampleInputUname" aria-describedby="UnameHelp" placeholder="Enter Username...">
+                                            <input type="text" class="form-control form-control-user" id="exampleInputUname" aria-describedby="UnameHelp" placeholder="Enter Username...">
                                         </div>
                                         <div class="form-group">
-                                            <input type="password" name="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Password">
+                                            <input type="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Password">
                                         </div>
                                         <!-- <div class="form-group">
                                             <div class="custom-control custom-checkbox small">
@@ -56,9 +55,9 @@
                                                     Me</label>
                                             </div>
                                         </div> -->
-                                        <button class="btn btn-primary btn-user btn-block">
+                                        <a href="index.html" class="btn btn-primary btn-user btn-block">
                                             Login
-                                        </button>
+                                        </a>
                                         <hr>
                                         <!-- <a href="index.html" class="btn btn-google btn-user btn-block">
                                             <i class="fab fa-google fa-fw"></i> Login with Google
@@ -68,7 +67,9 @@
                                         </a> -->
                                     </form>
                                     <hr>
-                                   
+                                    <div class="text-center">
+                                        <a class="small" href="forgot-password.html">Forgot Password?</a>
+                                    </div>
                                     <!-- <div class="text-center">
                                         <a class="small" href="register.html">Create an Account!</a>
                                     </div> -->

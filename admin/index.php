@@ -1,9 +1,3 @@
-<?php
-
-session_start();
-// var_dump($_SESSION['data'])
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -56,12 +50,7 @@ session_start();
       <li class="nav-item">
         <a class="nav-link" href="foto/crud_fotoDashboard.php">
           <i class="fas fa-fw fa-camera"></i>
-          <span>Foto product</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="foto-crud/index.php">
-          <i class="fas fa-fw fa-camera"></i>
-          <span>Foto Menu</span></a>
+          <span>Foto Dashboard</span></a>
       </li>
       <!-- Nav Item - data reservasi -->
       <li class="nav-item">
@@ -110,7 +99,7 @@ session_start();
             <!-- Nav Item - User Information -->
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?= $_SESSION['data']['username'] ?></span>
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
                 <img class="img-profile rounded-circle" src="img/undraw_profile.svg" />
               </a>
               <!-- Dropdown - User Information -->

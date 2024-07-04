@@ -1,17 +1,3 @@
-<?php
-require_once '../controller/db_connect.php';
-session_start();
-$query = $conn->query("SELECT * FROM photos WHERE type = 'produk'");
-
-$data = [];
-while ($row = $query->fetch_assoc()) {
-    $data[] = $row;
-}
-
-// var_dump($data);die;
-
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -39,7 +25,51 @@ while ($row = $query->fetch_assoc()) {
     <!-- Page Wrapper -->
     <div id="wrapper">
         <!-- Sidebar -->
-        <?php include_once '../component/sidebar.php' ?>
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+            <!-- Sidebar - Brand -->
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="../index.php">
+                <div class="sidebar-brand-icon rotate-n-15">
+                    <i class="fas fa-laugh-wink"></i>
+                </div>
+                <div class="sidebar-brand-text mx-3">Fatamorgana Coffe - Admin</div>
+            </a>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider my-0" />
+
+            <!-- Nav Item - Dashboard -->
+            <li class="nav-item">
+                <a class="nav-link" href="../index.php">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Dashboard</span></a>
+            </li>
+            <!-- Nav Item - Tables -->
+            <li class="nav-item">
+                <a class="nav-link" href="../barang/crud_barang.php">
+                    <i class="fas fa-fw fa-cubes"></i>
+                    <span>Barang</span></a>
+            </li>
+            <!-- Nav Item - CRUD FOTO -->
+            <li class="nav-item active">
+                <a class="nav-link" href="crud_fotoDashboard.php">
+                    <i class="fas fa-fw fa-camera"></i>
+                    <span>Foto Dashboard</span></a>
+            </li>
+            <!-- Nav Item - data reservasi -->
+            <li class="nav-item">
+                <a class="nav-link" href="../reservasi/crud_reservasi.php">
+                    <i class="fas fa-fw fa-calendar"></i>
+                    <span>Reservasi</span></a>
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider d-none d-md-block" />
+
+            <!-- Sidebar Toggler (Sidebar) -->
+            <div class="text-center d-none d-md-inline">
+                <!-- <button class="rounded-circle border-0" id="sidebarToggle"></button> -->
+            </div>
+        </ul>
         <!-- End of Sidebar -->
 
         <!-- Content Wrapper -->
@@ -47,7 +77,38 @@ while ($row = $query->fetch_assoc()) {
             <!-- Main Content -->
             <div id="content">
                 <!-- Topbar -->
-                <?php include_once '../component/nav.php' ?>
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                    <!-- Topbar Navbar -->
+                    <ul class="navbar-nav ml-auto">
+                        <!-- Nav Item - User Information -->
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
+                                <img class="img-profile rounded-circle" src="../public/img/undraw_profile.svg" />
+                            </a>
+                            <!-- Dropdown - User Information -->
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                                <a class="dropdown-item" href="#">
+                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Profile
+                                </a>
+                                <a class="dropdown-item" href="#">
+                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Settings
+                                </a>
+                                <a class="dropdown-item" href="#">
+                                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Activity Log
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Logout
+                                </a>
+                            </div>
+                        </li>
+                    </ul>
+                </nav>
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
@@ -74,21 +135,28 @@ while ($row = $query->fetch_assoc()) {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <?php foreach ($data as $item) : ?>
-                                            <tr>
-                                                <td><img src="../public/img/galeri/<?= $item['photo_url'] ?>" width="100" height="100" alt=""></td>
-                                                <td><?= $item['upload_date'] ?></td>
-                                                <td>Admin</td>
-                                                <td>
-                                                    <form action="../controller/foto.php" method="post">
-                                                        <input type="hidden" name="id" value="<?= $item['photo_id'] ?>">
-                                                        <input type="hidden" name="name" value="<?= $item['photo_url'] ?>">
-                                                        <input type="hidden" id="link" name="link" value="foto/crud_fotoDashboard.php" >
-                                                        <button name="action" value="delete" class="btn btn-danger">Hapus</button>
-                                                    </form>
-                                                </td>
-                                            </tr>
-                                        <?php endforeach; ?>
+                                        <?php
+                                        include '../controller/db_connect.php';
+                                        $sql = "SELECT photos.photo_id, photos.photo_url, photos.upload_date, users.username 
+                            FROM photos 
+                            JOIN users ON photos.uploaded_by = users.user_id";
+                                        $result = $conn->query($sql);
+                                        if ($result->num_rows > 0) {
+                                            while ($row = $result->fetch_assoc()) {
+                                                echo "<tr>";
+                                                echo "<td><img src='" . $row['photo_url'] . "' width='100'></td>";
+                                                echo "<td>" . $row['upload_date'] . "</td>";
+                                                echo "<td>" . $row['username'] . "</td>";
+                                                echo "<td>
+                                <button class='btn btn-danger' onclick='deletePhoto(" . $row['photo_id'] . ")'>Delete</button>
+                              </td>";
+                                                echo "</tr>";
+                                            }
+                                        } else {
+                                            echo "<tr><td colspan='4'>No photos found</td></tr>";
+                                        }
+                                        $conn->close();
+                                        ?>
                                     </tbody>
                                 </table>
                             </div>
@@ -145,7 +213,7 @@ while ($row = $query->fetch_assoc()) {
     <div class="modal fade" id="tambahModal" tabindex="-1" role="dialog" aria-labelledby="tambahModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <form method="POST" action="../controller/foto.php" enctype="multipart/form-data">
+                <form method="POST" action="../controller/photo_controller.php" enctype="multipart/form-data">
                     <div class="modal-header">
                         <h5 class="modal-title" id="tambahModalLabel">Tambah Foto</h5>
                         <button class="close" type="button" data-dismiss="modal" aria-label="Close">
@@ -156,13 +224,12 @@ while ($row = $query->fetch_assoc()) {
                         <div class="form-group">
                             <label for="photo_url">Pilih Foto</label>
                             <input type="file" class="form-control" id="photo_url" name="photo_url" required>
-                            <input type="hidden" id="type" name="type" value="produk" >
-                            <input type="hidden" id="link" name="link" value="foto/crud_fotoDashboard.php" >
                         </div>
+                        <input type="hidden" name="action" value="create">
                     </div>
                     <div class="modal-footer">
                         <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                        <button class="btn btn-primary" name="action" value="create" type="submit">Tambah</button>
+                        <button class="btn btn-primary" type="submit">Tambah</button>
                     </div>
                 </form>
             </div>
