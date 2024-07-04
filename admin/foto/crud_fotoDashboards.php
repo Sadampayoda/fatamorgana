@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -52,7 +51,7 @@
       </li>
       <!-- Nav Item - CRUD FOTO -->
       <li class="nav-item active">
-        <a class="nav-link" href="crud_fotoDashboards.php">
+        <a class="nav-link" href="crud_fotoDashboard.php">
           <i class="fas fa-fw fa-camera"></i>
           <span>Foto Dashboard</span></a>
       </li>
@@ -115,33 +114,9 @@
         <!-- Begin Page Content -->
         <!-- Tambah data -->
         <div class="container-fluid">
-          <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#tambahModal">
+          <button type="warning" class="btn btn-warning">
             Tambah Data Foto
           </button>
-          <div class="modal fade" id="tambahModal" tabindex="-1" role="dialog" aria-labelledby="tambahModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                <form method="POST" action="../controller/foto.php" enctype="multipart/form-data">
-                  <div class="modal-header">
-                    <h5 class="modal-title" id="tambahModalLabel">Tambah Foto</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">×</span>
-                    </button>
-                  </div>
-                  <div class="modal-body">
-                    <div class="form-group">
-                      <label for="photo_url">Pilih Foto</label>
-                      <input type="file" class="form-control" id="photo_url" name="photo_url" required>
-                    </div>
-                  </div>
-                  <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <button class="btn btn-primary" name="action" value="create" type="submit">Tambah</button>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
           <!-- DataTales Example -->
           <hr />
           <div class="card shadow mb-4">
@@ -160,20 +135,12 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <?php foreach ($data as $item) : ?>
-                      <tr>
-                        <td><img src="../public/img/galeri/<?= $item['photo_url'] ?>" width="100" height="100" alt=""></td>
-                        <td><?= $item['upload_date'] ?></td>
-                        <td>Admin</td>
-                        <td>
-                          <form action="../controller/foto.php" method="post">
-                            <input type="hidden" name="id" value="<?= $item['photo_id'] ?>">
-                            <input type="hidden" name="name" value="<?= $item['photo_url'] ?>">
-                            <button name="action" value="delete" class="btn btn-danger">Hapus</button>
-                          </form>
-                        </td>
-                      </tr>
-                    <?php endforeach; ?>
+                    <tr>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                    </tr>
                   </tbody>
                 </table>
               </div>
@@ -245,5 +212,3 @@
 </body>
 
 </html>
-
-
